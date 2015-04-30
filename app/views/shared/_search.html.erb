@@ -1,0 +1,25 @@
+
+<form id="index-search" role="search">
+  <table>
+    <tr>
+      <td>
+        <select class="form-control">
+          <% filters.each do |key, value| %>
+            <option value="<%= key.to_s %>"><%= value %></option>
+          <% end %>
+        </select>
+      </td>
+      <td class="text-right">
+        <div class="input-group">
+          <input type="text" value="<%= params['barcode'] %><%= params['brand'] %><%= params['byname'] %>" class="form-control" name="<%= filters.keys[0].to_s %>" placeholder="Buscar">
+          <!-- Truco sucio revisar el value del input -->
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</form>

@@ -1,0 +1,53 @@
+<h1>Listado de Registros Caja</h1>
+<p>A continuación se listan los Registros Caja almacenados en el sistema</p>
+<br>
+
+<div class="panel panel-default">
+  <div class="panel-heading panel-heading-toolbox">
+    <div class="panel-title">
+      Listado de Registros Caja
+    </div>
+  </div>
+  <div class="panel-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Caja</th>
+            <th>Tienda</th>
+            <th>Monto</th>
+            <th>Tipo</th>
+            <th>Fecha</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @cash_registers.each do |cash_register| %>
+          <tr>
+              <td><%= cash_register.user %></td>
+              <td>
+                <% if cash_register.has_cashbox? %>
+                  <%= cash_register.cashbox %>
+                <% else %>
+                  <small class="muted">Caja eliminada</small>
+                <% end %>
+              </td>
+              <td>
+                <% if cash_register.has_cashbox? %>
+                  <%= cash_register.cashbox.store %>
+                <% end %>
+              </td>
+              <td><%= cash_register.amount %></td>
+              <td><%= cash_register.type %></td>
+              <td><%= cash_register.created_at %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @cash_registers, renderer: BootstrapPagination::Rails %>
+
+  </div>
+</div>
+
+<br>

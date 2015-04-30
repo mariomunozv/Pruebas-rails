@@ -1,0 +1,251 @@
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background-color: @yield-back!important;
+}
+
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	padding-left: @sidebar-width;
+  	transition: all 0.4s ease 0s;
+  	background-color: @yield-back;
+
+  	&.layout-empty {
+  		padding-left: 0px;
+  	}
+	
+	& > #header {
+		& .navbar {
+			border-bottom: 0px;
+			background-color: @header-back;
+
+			&.navbar-default .navbar-nav > li > a {
+				color: white;
+			}
+
+			& .navbar-brand {
+				font-family: 'Francois One', sans-serif;
+				width: @sidebar-width;
+				font-size: 24px;
+				text-align: center;
+				background: @sidebar-brand;
+				color: white;
+			}
+		}
+	}
+	& > #header-ghost { height: @header-height; }
+	& > #sidebar-wrapper {
+		margin-left: -@sidebar-width;
+		left: @sidebar-width;
+		width: @sidebar-width;
+		background: @sidebar-back;
+		position: fixed;
+		height: 100%;
+		overflow-y: auto;
+		z-index: 1000;
+		transition: all 0.4s ease 0s;
+		border-right: 1px solid @header-back;
+
+		.profile {
+			padding: 10px;
+
+			.fa {
+				color: @sidebar-brand;
+				font-size: 41px;
+				background: #E0E0E0;
+				padding: 16px 20px;
+				border-radius: 1001px;
+			}
+		}
+	}
+	& > #page-content-wrapper {
+		width: 100%;
+		padding-left: 25px;
+		padding-right: 25px;
+
+		.breadcrumb {
+			margin-left: -25px;
+			margin-right: -25px;
+			border-radius: 0px;
+			border-bottom: 1px solid @header-back;	
+			background-color: @breadcrumb-back;
+			padding: 10px 15px;
+		}
+
+		.flash {
+			margin-top: -20px;
+			margin-right: -25px;
+			margin-left: -25px;
+			margin-bottom: 20px;
+			min-height: 1px;
+
+			.alert {
+				border-radius: 0px;
+				color: white;
+
+				&.alert-success {
+					background-color: #34AE01;
+				}
+				&.alert-warning {
+					background-color: #C80000;
+				}
+			}
+		}
+	}
+	& > #footer-ghost { height: @footer-height; }
+	& > #footer {
+		width: 100%;
+		height: @footer-height;
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+		padding-right: 25px;
+	}
+}
+
+#footer {
+	margin-top: 15px;
+	padding: 0px 25px 25px 25px;
+
+}
+
+.sidebar-nav {
+	width: @sidebar-width;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	& li {
+		line-height: 40px;
+		text-indent: 20px;
+		border-bottom: 1px solid @header-back;
+
+		&:first-child {
+			border-top: 1px solid @header-back;
+		}
+
+		& a {
+			color: darken(@header-back, 30%);
+			display: block;
+			text-decoration: none;
+			padding-left: 7px;
+
+			&:hover {
+				color: @sidebar-brand;	
+				background: lighten(@header-back, 15%);
+				text-decoration: none;
+				transition: all 0.5s ease 0s;
+			}
+		}
+	}
+	& > .sidebar-brand {
+		height: 65px;
+		line-height: 60px;
+		font-size: 18px;
+
+		& a {
+			color: #999999;
+
+			&:hover {
+				color: #fff;
+				background: none;				
+			}			
+		}
+	}
+	& .glyphicon {
+		top: 2px;
+		left: -30px;
+	}
+	& .fa {
+		margin-left: -29px;
+		margin-right: 13px;
+	}
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.content-header {
+  height: 65px;
+  line-height: 65px;
+
+  & h1 {
+	margin: 0;
+	margin-left: 20px;
+	line-height: 65px;
+	display: inline-block;  	
+  }
+}
+
+#menu-toggle {
+	display: none;
+	font-size: 18px;
+	padding: 20px 15px 15px 20px;
+
+	&:hover {
+		background-color: @sidebar-brand;
+	}
+}
+
+.inset {
+  padding: 20px;
+}
+
+@media (max-width:767px) {
+
+	#wrapper {
+		padding-left: 0;
+
+		&.active {
+			position: relative;
+			left: @sidebar-width;
+
+			& #sidebar-wrapper {
+				left: @sidebar-width;
+				width: @sidebar-width;
+				transition: all 0.4s ease 0s;
+			}
+		}
+		& > #sidebar-wrapper {
+			left: 0;
+		}
+	}	
+
+	#menu-toggle {
+		display: inline-block;
+	}
+
+	.inset {
+		padding: 15px;
+	}
+
+}
+
+#wrapper.layout-empty {
+
+	& > .header {
+		text-align: center;
+		color: white;
+		background: @sidebar-brand;
+		padding-bottom: 160px;
+		padding-top: 90px;
+		border-bottom: 5px solid @yield-green;
+	}
+	& > .body-inset {
+		margin-top: -140px;
+	}
+}
+
+@media (max-width: @screen-xs-max) {
+	#wrapper.layout-empty {
+
+		& > .body-inset {
+			padding: 0px 25px;
+		}
+	}
+}

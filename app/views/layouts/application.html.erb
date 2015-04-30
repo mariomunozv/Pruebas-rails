@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+	<title>
+		<%= current_user.client %>
+	</title>
+	
+	<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+	<%= javascript_include_tag "select2", "data-turbolinks-track" => true %>
+	<%= stylesheet_link_tag    "select2", media: "all", "data-turbolinks-track" => true %>
+	<%= csrf_meta_tags %>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/index/home">La Boti</a>
+					<a id="menu-toggle" href="#"><span class="glyphicon glyphicon-th-list"></span></a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<!-- <li><a></a></li> -->
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/"><i class="fa fa-home"></i>  Inicio</a></li>
+						<li><a href="/logout"><i class="fa fa-sign-out"></i>  Salir</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div id="header-ghost"></div>
+
+		<div id="sidebar-wrapper">
+			<div class="profile text-center">
+				<i class="fa fa-user"></i>
+				<h4><%= current_user.name + " " + current_user.lastname %></h4>
+				<span class="label label-default"><%= current_user.client %></span>
+			</div>
+			<ul class="sidebar-nav">
+                <li><a href="/products"><span class="fa fa-beer"></span>Productos</a></li>
+                <li><a href="/tags"><i class="fa fa-sitemap"></i> Familias</a></li>
+                <li><a href="/stores"><span class="glyphicon glyphicon-briefcase"></span>Tiendas</a></li>
+                <li><a href="/sales"><span class="glyphicon glyphicon-signal"></span>Ventas</a></li>
+                <li><a href="/users"><span class="glyphicon glyphicon-user"></span>Usuarios</a></li>
+                <li><a href="/taxes"><i class="fa fa-money"></i>Impuestos</a></li>
+                <li><a href="/inventories"><i class="glyphicon glyphicon-list-alt"></i>Inventarios</a></li>
+                <li><a href="/decreases"><i class="glyphicon glyphicon-trash"></i>Mermas</a></li>
+                <li><a href="/cash_registers"><i class="glyphicon glyphicon-usd"></i>Registro Caja</a></li>
+                <li><a href="/dashboard"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+            </ul>
+		</div>
+
+		<div id="page-content-wrapper">
+			<ol class="breadcrumb">
+				<%= render_breadcrumbs :tag => :li, :separator => "" %>
+			</ol>
+			<%= render partial: "shared/notices" %>
+			<%= yield %>
+		</div>
+
+		<div id="footer-ghost">
+			
+		</div>
+		<div id="footer">
+			<div class="row">
+				<div class="col-sm-12 text-right">
+					Monitor de negocios v2.0 - <a href="http://www.requies.cl/">Requies</a>, 2015
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/js/bootstrap/transition.js"></script>
+    <script src="/js/bootstrap/alert.js"></script>
+    <script src="/js/bootstrap/button.js"></script>
+    <script src="/js/bootstrap/carousel.js"></script>
+    <script src="/js/bootstrap/collapse.js"></script>
+    <script src="/js/bootstrap/dropdown.js"></script>
+    <script src="/js/bootstrap/modal.js"></script>
+    <script src="/js/bootstrap/tooltip.js"></script>
+    <script src="/js/bootstrap/popover.js"></script>
+    <script src="/js/bootstrap/scrollspy.js"></script>
+    <script src="/js/bootstrap/tab.js"></script>
+    <script src="/js/bootstrap/affix.js"></script>
+    <script src="/js/highcharts/highcharts.js"></script>
+    <script src="/js/highcharts/highcharts-more.js"></script>
+    <script src="/js/highcharts/solid-gauge.js"></script>
+    <!--<script src="/js/highcharts/exporting.js"></script>-->
+
+    <script type="text/javascript">
+    	$('.dropdown-toggle').dropdown()  
+
+    	// Sidebar toggle
+    	$("#menu-toggle").click(function(e) {
+	        e.preventDefault()
+	        $("#wrapper").toggleClass("active")
+	    });
+    </script>
+
+	<script src="/js/widow/index-search.js"></script>
+
+    <%= yield :script %>
+</body>
+</html>

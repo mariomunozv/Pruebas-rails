@@ -1,0 +1,58 @@
+<h1>Detalle producto <%= @product.barcode %></h1>
+<p>A continuación se muestra la información almacenada sobre el producto.</p>
+<br>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-toolbox">
+		<div class="panel-title">Detalle producto</div>
+		<div class="panel-toolbar">
+			<%= link_to 'Volver', products_path, :class => "btn btn-link" %>
+			<%= link_to edit_product_path(@product), :class => "btn btn-default" do %>
+				<i class="fa fa-pencil"></i>
+			<% end %>
+			<%= link_to @product, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" do %>
+				<i class="fa fa-trash-o"></i>
+			<% end %>
+		</div>
+	</div>
+	<div class="panel-body">
+		
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<th>Código:</th>
+					<td><%= @product.barcode %></td>
+				</tr>
+				<tr>
+					<th>Marca:</th>
+					<td><%= @product.brand %></td>
+				</tr>
+				<tr>
+					<th>Nombre:</th>
+					<td><%= @product.name %></td>
+				</tr>
+				<tr>
+					<th>Contenido:</th>
+					<td><%= @product.content %> <%= @product.unit %></td>
+				</tr>
+				<tr>
+					<th>Precio de venta:</th>
+					<td>$ <%= @product.price.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %> -.</td>
+				</tr>
+				<tr>
+					<th>Precio de compra:</th>
+					<td>$ <%= @product.price_net.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %> -.</td>
+				</tr>
+				<tr>
+					<th>Impuesto:</th>
+					<td><%= @product.tax.name %> (<%= @product.tax.value %>%)</td>
+				</tr>
+				<tr>
+					<th>Familia</th>
+					<td><%= @product.tag %></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</div>

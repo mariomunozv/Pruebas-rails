@@ -1,0 +1,43 @@
+<h1>Listado de Mermas</h1>
+<p>A continuación se listan los registros de Mermas almacenados en el sistema</p>
+<br>
+
+<div class="panel panel-default">
+  <div class="panel-heading panel-heading-toolbox">
+    <div class="panel-title">
+      Listado de Mermas
+    </div>
+  </div>
+  <div class="panel-body">
+    
+    <table class="table table-hover">
+      <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Tienda</th>
+            <th>Responsable</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @decreases.each do |decrease| %>
+          <tr>
+              <td>
+                <%= link_to decrease_path(decrease) do %>
+                  <%= decrease.created_at %>
+                <% end %>
+
+              </td>
+              <td><%= decrease.store %></td>
+              <td><%= decrease.user %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @decreases, renderer: BootstrapPagination::Rails %>
+
+  </div>
+</div>
+
+<br>

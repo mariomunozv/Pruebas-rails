@@ -1,0 +1,60 @@
+<h1>Detalle del Inventario</h1>
+<p>A continuación se muestra la información almacenada del Inventario.</p>
+<br>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-toolbox">
+		<div class="panel-title">Datos Generales</div>
+		<div class="panel-toolbar">
+			<%= link_to 'Volver', decreases_path, :class => "btn btn-link" %>
+		</div>
+	</div>
+	<div class="panel-body">
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<th>Tienda:</th>
+					<td><%= @decrease.store.name %></td>
+				</tr>
+				<tr>
+					<th>Fecha:</th>
+					<td><%= @decrease.created_at %></td>
+				</tr>
+				<tr>
+					<th>Responsable:</th>
+					<td><%= @decrease.user %></td>
+				</tr>
+				<tr>
+					<th>Total:</th>
+					<td>$<%= @decrease.total %></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="panel-heading panel-heading-toolbox">
+		<div class="panel-title">Detalle</div>
+	</div>
+	<div class="panel-body">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Nombre Producto</th>
+					<th>Marca</th>
+					<th>Cantidad</th>
+					<th>Precio</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% for d in @decrease.details %>
+					<tr>
+						<% prod = Product.new.get_product(d[:product_id]) %>
+						<td><%= prod %></td><!--truco sucio-->
+						<td><%= prod.brand %></td><!--truco sucio-->
+						<td><%= d[:amount] %></td>
+						<td>$<%= prod.price.round %></td>
+	                </tr>
+                <% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

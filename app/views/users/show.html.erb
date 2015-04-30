@@ -1,0 +1,44 @@
+<h1>Detalle del usuario</h1>
+<p>A continuación se muestra el detalle de este usuario.</p>
+<br>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-toolbox">
+		<div class="panel-title">Detalle del usuario</div>
+		<div class="panel-toolbar">
+			<%= link_to 'Volver', users_path, :class => "btn btn-link" %>
+			<%= link_to edit_user_path(@user), :class => "btn btn-default" do %>
+			<i class="fa fa-pencil"></i>
+			<% end %>
+			<% if current_user.id != @user.id %>
+				<%= link_to @user, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" do %>
+				<i class="fa fa-trash-o"></i>
+				<% end %>
+			<% else %>
+				<%= link_to @user, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger disabled" do %>
+				<i class="fa fa-trash-o"></i>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+	<div class="panel-body">
+		
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<th>Nombre:</th>
+					<td><%= @user.name %> <%= @user.lastname %></td>
+				</tr>
+				<tr>
+					<th>Email:</th>
+					<td><%= @user.email %></td>
+				</tr>
+				<tr>
+					<th>Rol:</th>
+					<td><%= @user.role %></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</div>

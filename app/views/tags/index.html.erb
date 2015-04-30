@@ -1,0 +1,46 @@
+<h1>Listado de familias</h1>
+<p>A continuación se muestran las familias almacenadas en el sistema.</p>
+<br>
+
+<div class="panel panel-default">
+  <div class="panel-heading panel-heading-toolbox">
+    <div class="panel-title">
+      Listado de familias
+    </div>
+    <div class="panel-toolbar">
+      <%= link_to new_tag_path, :class => "btn btn-success" do %>
+        <i class="fa fa-plus"></i>
+      <% end %>
+    </div>
+  </div>
+  <div class="panel-body">
+    
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Fecha de creación</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @tags.each do |tag| %>
+        <tr>
+          <td>
+            <%= link_to tag do %>
+            <%= tag.name %>
+            <% end %>
+          </td>
+          <td><%= tag.created_at %></td>
+
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @tags, renderer: BootstrapPagination::Rails %>
+
+  </div>
+</div>
+
+<br>

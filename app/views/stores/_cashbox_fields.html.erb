@@ -1,0 +1,33 @@
+<% if (f.object.valid? or (f.object.macaddress.to_s+f.object.name.to_s+f.object.description.to_s).length == 0) %>
+
+<tr class="fields">
+<% else %>
+<tr class="fields danger">
+<% end %>
+	<% if f.object.macaddress != nil %>
+		<!-- truco sucio dicen -->
+		<%= f.hidden_field :_id %>
+	<% end %>
+	<th>
+		<%= f.label :name, "Nombre" %>
+	</th>
+	<th>
+		<%= f.text_field :name %>
+	</th>
+	<th>
+		<%= f.label :description, "Descripcion" %>
+	</th>
+	<th>
+		<%= f.text_field :description, :rows => 3 %>
+	</th>
+	<th>
+		<%= f.label :macaddress, "Dirección Mac" %>
+	</th>
+	<th>
+		<%= f.text_field :macaddress, :rows => 3 %>
+	</th>
+	<td>
+		<%= f.hidden_field :_destroy %>
+		<%= link_to_remove_fields "remove", f %>
+	</td>
+</tr>

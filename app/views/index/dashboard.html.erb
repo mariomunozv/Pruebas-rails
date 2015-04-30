@@ -1,0 +1,424 @@
+<!-- <h1>Dashboard</h1> -->
+
+<script type="text/javascript">
+	var chart;
+	$(document).ready(function() {
+
+		chart = new Highcharts.Chart({
+            credits: {
+                enabled: false
+            },
+			chart: {
+				renderTo: 'graficaLineal', 	// Le doy el nombre a la gráfica
+				defaultSeriesType: 'line'	// Pongo que tipo de gráfica es
+			},
+			title: {text: 'Ventas'},// Titulo (Opcional)
+			xAxis: {
+				// Pongo los datos en el eje de las 'X'
+				categories: [<% @data[:stores][0][:sales][:months].each do |month| %>
+					"<%= month[:month] %>",
+				<% end %>],
+				// Pongo el título para el eje de las 'X'
+				title: {text: 'Meses'}
+			},
+			// Pongo el título para el eje de las 'Y'
+			yAxis: {title: {text: 'Ingreso en pesos'}},
+			// Doy formato al la "cajita" que sale al pasar el ratón por encima de la gráfica
+			tooltip: {
+				enabled: true,
+				formatter: function() {
+					return '<b>'+ this.series.name +'</b><br/>'+
+						this.x +': $'+ this.y;
+				}
+			},
+			// Doy opciones a la gráfica
+			plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: true}},
+			// Doy los datos de la gráfica para dibujarlas
+			series: [<% @data[:stores].each do |store| %>
+						{name: "<%= store[:store] %>",
+						 data: [<% store[:sales][:months].each do |month| %>
+									<%= month[:amount] %>,
+								<% end %>],
+						},
+					<% end %>]
+		});	
+	});
+
+// TOP PRODUCTOS
+$(function () {
+    $('#container').highcharts({
+        credits: {
+            enabled: false
+        },
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Porcentaje de ingreso por Tienda',
+        },
+        subtitle: {
+            text: 'Ultimos 30 días'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>%{point.percentage:.1f}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Ventas por Tienda',
+            data: [
+            	<% @data[:stores].each_with_index do |store, index| %>
+            		<% if index != 0 %>
+					["<%= store[:store] %>",<%= store[:last_month] %>],
+					<% end %>
+				<% end %>
+            ]
+        }]
+    });
+});	
+$(function () {
+    $('#container-bar').highcharts({
+        credits: {
+            enabled: false
+        },
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Fechas con Mermas relevantes'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Monto en pesos'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Monto: <b>{point.y:.0f}</b><br>Encargado: <b>{point.user}</b><br>Comentario: <b>{point.comment}</b><br>'
+        },
+        series: [{
+            data: 
+            [
+                <% @data[:decreases].each do |decrease| %>
+                    {
+                        name:'<%= decrease[:date] %>',
+                        y:<%= decrease[:amount] %>,
+                        comment:'<%= decrease[:comment] %>',
+                        user: '<%= decrease[:user] %>'
+                    },
+                <% end %>
+            ],
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '{point.y:.0f}',
+                y: 10, // 10 pixels down from the top
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    });
+});
+$(function () {
+
+    var ranges = [
+            [28800000, 143000, 277000],
+            [30600000, 145000, 278000],
+            [32400000, 155000, 296000],
+            [34200000, 167000, 307000],
+            [36000000, 165000, 250000],
+            [37800000, 178000, 257000],
+            [39600000, 135000, 248000],
+            [41400000, 105000, 214000],
+            [43200000, 92000, 238000],
+            [45000000, 116000, 218000],
+            [46800000, 107000, 237000],
+            [48600000, 110000, 233000],
+            [50400000, 116000, 237000],
+            [52200000, 118000, 207000],
+            [54000000, 126000, 224000],
+            [55800000, 136000, 196000],
+            [57600000, 114000, 226000],
+            [59400000, 132000, 250000],
+            [61200000, 142000, 216000],
+            [63000000, 131000, 171000],
+            [64800000, 122000, 155000],
+            [66600000, 120000, 208000],
+        ],
+        averages = [
+            [28800000, 203000],
+            [30600000, 225000],
+            [32400000, 205000],
+            [34200000, 257000],
+            [36000000, 185000],
+            [37800000, 248000],
+            [39600000, 205000],
+            [41400000, 165000],
+            [43200000, 192000],
+            [45000000, 176000],
+            [46800000, 177000],
+            [48600000, 200000],
+            [50400000, 216000],
+            [52200000, 148000],
+            [54000000, 176000],
+            [55800000, 166000],
+            [57600000, 164000],
+            [59400000, 222000],
+            [61200000, 182000],
+            [63000000, 151000],
+            [64800000, 138000],
+            [66600000, 160000],
+        ];
+
+
+    $('#hours').highcharts({
+
+        title: {
+            text: 'Ventas segun horario'
+        },
+        subtitle:{text:"Ultimos 30 días"},
+
+        xAxis: {
+            type: 'datetime'
+        },
+
+        yAxis: {
+            title: {
+                text: ""
+            }
+        },
+
+        tooltip: {
+            crosshairs: true,
+            shared: true,
+            valueSuffix: '',
+            formatter: function() {
+                    d = new Date(this.x);
+                    d.setTime( d.getTime() + d.getTimezoneOffset()*60*1000);
+                    return '<b>'+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)+'</b><br/>'+
+                           'Promedio: $<b>'+this.y+'</b><br>'+
+                           'Rango: <b>$'+this.points[1].point.low+' - $'+this.points[1].point.high+"</b>";
+                },
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>',
+                }
+            }
+        },
+        legend: {
+        },
+
+        series: [{
+            name: 'Promedio',
+            data: averages,
+            zIndex: 1,
+            marker: {
+                fillColor: 'white',
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[0]
+            }
+        }, {
+            name: 'Rango',
+            data: ranges,
+            type: 'arearange',
+            lineWidth: 0,
+            linkedTo: ':previous',
+            color: Highcharts.getOptions().colors[0],
+            fillOpacity: 0.3,
+            zIndex: 0
+        }]
+    });
+});
+
+
+</script>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="panel-title">Dashboard</div>
+	</div>
+	<div class="panel-body">
+		<div class="row dashboard-numbers">
+            <div class="col-xs-2">
+                <h1><%= @data[:stores].length-1 %></h1>
+                <p>Locales</p>
+            </div>
+            <div class="col-xs-2">
+                <h1><%= @data[:cashboxes] %></h1>
+                <p>Cajas</p>
+            </div>
+            <div class="col-xs-2">
+                <h1><%= @data[:sellers][:cant] %></h1>
+                <p>Vendedores</p>
+            </div>
+            <div class="col-xs-2">
+                <h1><%= @data[:admins] %></h1>
+                <p>Administradores</p>
+            </div>
+            <div class="col-xs-2">
+                <h1><%= @data[:products][:cant] %></h1>
+                <p>Productos</p>
+            </div>
+            <div class="col-xs-2">
+                <h1><%= @data[:stores][0][:sales][:day][:number] %></h1>
+                <p>Ventas hoy</p>
+            </div>
+        </div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div id="graficaLineal" style="hei_ght: 500px;"></div>
+			</div>
+			<br>
+			<div class="col-lg-4"><br /><br /><br />
+                <div class="panel panel-success">
+                    <div class="panel-heading panel-heading-toolbox aux-text-right">
+                        <div class="panel-title">Top 5 Productos</div>
+                    </div>
+    				<table class="table table-hover">
+                        <thead>
+                            <th>Producto</th>
+                            <th>Unidades</th>
+                            <th>Ventas</th>
+                        </thead>
+                        <tbody>
+                            <% @data[:products][:top].each do |product| %>
+                            <tr>
+                                <td>
+                                    <%= link_to product_path product[:_id] do %>
+                                    <%= product[:name] %>
+                                    <% end %>
+                                </td>
+                                <td><%= product[:number] %></td>
+                                <td><%= product[:amount] %></td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+			</div>
+            <div class="col-lg-6">
+                <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+            </div>
+            <div class="col-lg-3"><br /><br /><br />
+                <div class="panel panel-success">
+                    <div class="panel-heading panel-heading-toolbox aux-text-right">
+                        <div class="panel-title">Top 5 Vendedores</div>
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <th>Vendedor</th>
+                            <th>Ventas</th>
+                        </thead>
+                        <tbody>
+                            <% @data[:sellers][:top].each do |seller| %>
+                            <tr>
+                                <td>
+                                    <%= link_to user_path seller[:_id] do %>
+                                    <%= seller[:name] %>
+                                    <% end %>
+                                </td>
+                                <td><%= seller[:amount] %></td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3"><br /><br /><br />
+                <div class="panel panel-danger">
+                    <div class="panel-heading panel-heading-toolbox">
+                        <div class="panel-title">5 Productos menos vendidos</div>
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <th>Vendedor</th>
+                            <th>Ventas</th>
+                        </thead>
+                        <tbody>
+                            <% @data[:products][:top].each do |product| %>
+                            <tr>
+                                <td>
+                                    <%= link_to product_path product[:_id] do %>
+                                    <%= product[:name] %>
+                                    <% end %>
+                                </td>
+                                <td><%= product[:amount] %></td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div id="container-bar" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            </div>
+            <div class="col-lg-9">
+                <div id="hours" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            </div>
+            <div class="col-lg-3"><br /><br /><br />
+                <div class="panel panel-danger">
+                    <div class="panel-heading panel-heading-toolbox aux-text-right">
+                        <div class="panel-title">5 Vendedores con menos ventas</div>
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <th>Vendedor</th>
+                            <th>Ventas</th>
+                        </thead>
+                        <tbody>
+                            <% @data[:sellers][:worst].each do |seller| %>
+                            <tr>
+                                <td>
+                                    <%= link_to user_path seller[:_id] do %>
+                                    <%= seller[:name] %>
+                                    <% end %>
+                                </td>
+                                <td><%= seller[:amount] %></td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>

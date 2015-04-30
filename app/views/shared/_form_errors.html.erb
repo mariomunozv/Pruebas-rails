@@ -1,0 +1,14 @@
+
+<% if entity.errors.any? %>
+<div id="error_explanation" class="alert alert-danger form-alert">
+    <h2>Se encontraron <%= entity.errors.count %> errores al guardar <%= msg %>:</h2>
+    <ol>
+        <% entity.errors.each_with_index do |error| %>
+            <li>
+                <div class="label label-danger"><%= entity.class.human_attribute_name error[0] %></div>
+                <%= error[1] %>
+            </li>
+        <% end %>
+    </ol>
+</div>
+<% end %>

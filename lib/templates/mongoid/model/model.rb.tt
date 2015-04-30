@@ -1,0 +1,43 @@
+<% module_namespacing do -%>
+class <%= class_name %><%= " < #{options[:parent].classify}" if options[:parent] %>
+<% unless options[:parent] -%>
+  include Mongoid::Document
+<% end -%>
+  include Mongoid::Timestamps
+  include Filterable
+
+  self.per_page = 20
+  
+<% if options[:collection] -%>
+  store_in collection: "<%= options[:collection] %>"
+<% end -%>
+
+  # Fields
+<% attributes.reject{|attr| attr.reference?}.each do |attribute| -%>
+  field :<%= attribute.name %>, type: <%= attribute.type_class %>
+<% end -%>
+
+  # Associations
+<% attributes.select{|attr| attr.reference? }.each do |attribute| -%>
+  embedded_in :<%= attribute.name %>
+<% end -%>
+
+  # Validations
+<% attributes.each do |attribute| -%>
+  # validates :<%= attribute.name %>,
+<% end -%>
+
+  # Scopes
+<% attributes.reject{|attr| attr.reference? && attr.name != 'name' }.each do |attribute| -%>
+  # scope :<%= attribute.name %>, -> (<%= attribute.name %>) { where <%= attribute.name %>: /#{<%= attribute.name %>}/i }
+<% end -%>
+<% attributes.select{|attr| attr.reference? }.each do |attribute| -%>
+  # scope :<%= attribute.name %>, -> (<%= attribute.name %>) { where(:<%= attribute.name %>.in => <%= attribute.name.camelize %>.where(name: /#{<%= attribute.name %>}/i)).pluck(:id) }
+<% end -%>
+
+  # Methods
+  def to_s
+    name  # editable
+  end
+end
+<% end -%>

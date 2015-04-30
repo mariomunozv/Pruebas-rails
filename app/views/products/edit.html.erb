@@ -1,0 +1,20 @@
+<h1>Editar producto <%= @product.barcode %></h1>
+<p>A continuación se puede modificar la información del producto.</p>
+<br>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-toolbox">
+		<div class="panel-title">Editar producto</div>
+		<div class="panel-toolbar">
+			<%= link_to 'Volver', @product, :class => "btn btn-link" %>
+			<%= link_to @product, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" do %>
+				<i class="fa fa-trash-o"></i>
+			<% end %>
+		</div>
+	</div>
+	<div class="panel-body">
+		
+		<%= render 'form' %>
+
+	</div>
+</div>

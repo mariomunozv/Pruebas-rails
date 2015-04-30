@@ -1,0 +1,46 @@
+
+es:
+  mongoid:
+    attributes:
+      product:
+        name: "Nombre"
+        barcode: "Código de barras"
+        brand: "Marca"
+        content: "Contenido"
+        unit: "Unidad"
+        price: "Precio"
+        price_net: "Precio de compra"
+        tax_id: "Impuesto"
+      tag:
+        name: "Nombre"
+      store:
+        name: "Nombre"
+        address: "Dirección"
+        comune_id: "Comuna"
+        cashboxes: "Cajas"
+      user:
+        name: "Nombre"
+        lastname: "Apellido"
+        email: "Correo electrónico"
+        password: "Contraseña"
+        password_confirmation: "Repetir contraseña"
+        role_id: "Rol"
+      tax:
+        name: "Nombre"
+        value: "Valor"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              invalid: "Es necesario definir un correo electrónico válido."
+              blank: "Es necesario definir un correo electrónico."
+            password:
+              too_short: "Es necesario definir una contraseña mas larga."
+              blank: "Es necesario definir una contraseña."
+            password_confirmation: 
+              confirmation: "Es necesario repetir la misma contraseña."
+        store:
+          attributes:
+            cashboxes:
+              invalid: "Los campos de nombre y dirección son obligatorios."

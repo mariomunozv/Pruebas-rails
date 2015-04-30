@@ -1,0 +1,53 @@
+<h1>Detalle del Inventario</h1>
+<p>A continuación se muestra la información almacenada del Inventario.</p>
+<br>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-toolbox">
+		<div class="panel-title">Datos Generales</div>
+		<div class="panel-toolbar">
+			<%= link_to 'Volver', inventories_path, :class => "btn btn-link" %>
+		</div>
+	</div>
+	<div class="panel-body">
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<th>Tienda:</th>
+					<td><%= @inventory.store.name %></td>
+				</tr>
+				<tr>
+					<th>Fecha:</th>
+					<td><%= @inventory.created_at %></td>
+				</tr>
+				<tr>
+					<th>Responsable:</th>
+					<td><%= @inventory.user %></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="panel-heading panel-heading-toolbox">
+		<div class="panel-title">Detalle</div>
+	</div>
+	<div class="panel-body">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Nombre Producto</th>
+					<th>Marca</th>
+					<th>Cantidad</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% for d in @inventory.details %>
+					<tr>
+						<td><%= Product.new.get_product(d[:product_id]) %></td><!--truco sucio-->
+						<td><%= Product.new.get_product(d[:product_id]).brand %></td><!--truco sucio-->
+						<td><%= d[:amount] %></td>
+	                </tr>
+                <% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

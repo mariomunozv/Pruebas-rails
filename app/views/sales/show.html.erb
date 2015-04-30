@@ -1,0 +1,81 @@
+<h1>Detalle de la Venta</h1>
+<p>A continuación se muestra la información almacenada de la Venta.</p>
+<br>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-toolbox">
+		<div class="panel-title">Detalle de la Venta</div>
+		<div class="panel-toolbar">
+			<%= link_to 'Volver', sales_path, :class => "btn btn-link" %>
+		</div>
+	</div>
+	<div class="panel-body">
+		
+		<table class="table">
+			<tbody>
+				<tr>
+    				<th>Usuario:</th>
+				    <td><%= @sale.user %></td>
+				</tr>
+				<tr>
+				    <th>Fecha:</th>
+				    <td><%= @sale.created_at %></td>
+				</tr>
+				<tr>
+				    <th>Caja:</th>
+				    <td><%= @sale.cashbox %></td>
+				</tr>
+				<tr>
+					<th>Estado:</th>
+					<td>
+						<% if @sale.isValid == false %>
+		                  Anulada
+		                <% else %>
+		                  Valida
+		                <% end %>
+					</td>
+				</tr>
+				<tr>
+				    <th>Efectivo:</th>
+				    <td>$<%= @sale.cash %></td>
+				</tr>
+				<tr>
+				    <th>Tarjeta:</th>
+				    <td>$<%= @sale.card %></td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Nombre producto</th>
+					<th>Marca</th>
+					<th>Precio</th>
+					<th>Cantidad</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% acum = 0 %>
+				<% for d in @sale.details %>
+					<tr>
+						<td><%= d[:product][:name] %></td>
+						<td><%= d[:product][:brand] %></td>
+						<td class="text-right">$<%= d[:product][:price] %></td>
+						<td class="text-right"><%= d[:amount] %></td>
+						<td class="text-right">$<%= d[:product][:price]*d[:amount] %></td>
+					</tr>
+              		<% acum += d[:product][:price]*d[:amount] %>
+            	<% end %>
+            	<tr class="active">
+            		<td colspan=4></td>
+            		<td class="text-right">$<%= acum %></td>
+            	</tr>
+			</tbody>
+
+		</table>
+            
+	              
+
+	</div>
+</div>

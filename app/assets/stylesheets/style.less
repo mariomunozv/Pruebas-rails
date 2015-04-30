@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+/* Bootstrap */
+@import "bootstrap/bootstrap.less";
+
+/* Terram */
+@import "widow/widow.less";
+
+/* Fonts TEMPORAL */
+@import url(http://fonts.googleapis.com/css?family=Francois+One);
+
+/**
+ * Site
+ */
+
+body {
+	font-family: 'Open Sans', sans-serif;
+
+	h1, h2, h3, h4, h5, h6 {
+		color: @sidebar-brand;
+	}
+}
+
+// Repainting for Chrome 33.x
+// body {
+//     -webkit-animation-delay: 0.1s;
+//     -webkit-animation-name: fontfix;
+//     -webkit-animation-duration: 0.1s;
+//     -webkit-animation-iteration-count: 1;
+//     -webkit-animation-timing-function: linear;
+// }
+
+// @-webkit-keyframes fontfix {
+//     from { opacity: 1; }
+//     to   { opacity: 1; }
+// }
+
+.dashboard-numbers {
+	& > div {
+		.text-center();
+		color: #999;
+		padding-bottom: 20px;
+	}
+
+	h1 {
+		margin-bottom: 5px;
+		font-weight: bolder;
+		color:#999;
+	}
+	p {
+
+	}
+}

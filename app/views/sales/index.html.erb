@@ -1,0 +1,60 @@
+<h1>Listado de Ventas</h1>
+<p>A continuación se listan Ventas los almacenadas en el sistema</p>
+<br>
+
+<div class="panel panel-default">
+  <div class="panel-heading panel-heading-toolbox">
+    <div class="panel-title">
+      Listado de Ventas
+    </div>
+  </div>
+  <div class="panel-body">
+    
+    <table class="table table-hover">
+      <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Caja</th>
+            <th>Usuario</th>
+            <th>Tarjeta</th>
+            <th>Efectivo</th>
+            <th>Total</th>
+            <th>Estado</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @sales.each do |sale| %>
+          <% if not sale.isValid %>
+            <tr class="danger">
+          <% else %>
+            <tr>
+          <% end %>
+              <td>
+                <%= link_to sale_path(sale) do %>
+                <%= sale.created_at %>
+                <% end %>
+              </td>
+              <td><%= sale.cashbox %></td>
+              <td><%= sale.user %></td>
+              <td><%= sale.card %></td>
+              <td><%= sale.cash %></td>
+              <td><%= sale.total %></td>
+              <td>
+                <% if sale.isValid == false %>
+                  Anulada
+                <% else %>
+                  Valida
+                <% end %>
+              </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @sales, renderer: BootstrapPagination::Rails %>
+
+  </div>
+</div>
+
+<br>

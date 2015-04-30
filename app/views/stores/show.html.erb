@@ -1,0 +1,73 @@
+<h1>Detalle de la tienda</h1>
+<p>A continuación se muestra la información almacenada de la tienda.</p>
+<br>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-heading-toolbox">
+		<div class="panel-title">Detalle de la tienda</div>
+		<div class="panel-toolbar">
+			<%= link_to 'Volver', stores_path, :class => "btn btn-link" %>
+			<%= link_to edit_store_path(@store), :class => "btn btn-default" do %>
+				<i class="fa fa-pencil"></i>
+			<% end %>
+			<%= link_to @store, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" do %>
+				<i class="fa fa-trash-o"></i>
+			<% end %>
+		</div>
+	</div>
+	<div class="panel-body">
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+				  <th>Name:</th>
+				  <td><%= @store.name %></td>
+				</tr>
+							<tr>
+				  <th>Address:</th>
+				  <td><%= @store.address %></td>
+				</tr>
+							<tr>
+				  <th>Comune:</th>
+				  <td><%= @store.comune %></td>
+				</tr>
+							<tr>
+				  <th>Region:</th>
+				  <td><%= @store.comune.region %></td>
+				</tr>
+							<tr>
+					<th>Client:</th>
+					<td><%= @store.client.name %></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="panel-title">Cajas dentro de esta tienda</div>
+	</div>
+	<div class="panel-body">
+		<table class="table table-hover">
+	      	<thead>
+		        <tr>
+		            <th>Name</th>
+		            <th>Mac Address</th>
+		            <th>Description</th>
+		            <th>Store</th>
+		        </tr>
+	      	</thead>
+
+	      	<tbody>
+	        <% @store.cashboxes.each do |cashbox| %>
+	          	<tr>
+	                <td><%= cashbox.name %></td>
+	                <td><%= cashbox.macaddress %></td>
+	                <td><%= cashbox.description %></td>
+	                <td><%= cashbox.store.name %></td>
+	          	</tr>
+	        <% end %>
+	      	</tbody>
+	    </table>
+	</div>
+</div>
